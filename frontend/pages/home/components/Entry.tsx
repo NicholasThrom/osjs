@@ -3,7 +3,10 @@ import * as React from "react";
 import { entryHeight } from "../../../settings/cssConstants";
 import { keyCode } from "../../../util/keyCode";
 
-export class Entry extends React.Component {
+export class Entry extends React.Component<
+    { onCommandReceived: (command: string) => void },
+    { currentInput: string }
+> {
 
     public state = {
         currentInput: "",
@@ -21,6 +24,7 @@ export class Entry extends React.Component {
 
     private readonly onKeyDown = (event: React.KeyboardEvent) => {
         if (event.which === keyCode.enter) {
+            this.props.onCommandReceived(this.state.currentInput);
             this.setInput("");
         }
     }

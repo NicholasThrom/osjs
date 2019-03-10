@@ -4,10 +4,23 @@ import { globalCss } from "../../settings/commonCss";
 import { Display } from "./components/Display";
 import { Entry } from "./components/Entry";
 
-export class Home extends React.Component<{}, {}> {
+export class Home extends React.Component<
+    {},
+    { output: string }
+> {
+
+    public state = {
+        output: "",
+    };
 
     public constructor(props: {}) {
         super(props);
+    }
+
+    private onCommandReceived = (command: string) => {
+        this.setState((prev) => ({
+            output: prev.output + "\n" + command,
+        }));
     }
 
     public render() {
@@ -20,8 +33,10 @@ export class Home extends React.Component<{}, {}> {
                     }}
                 />
                 <div css={this.mainDivStyle}>
-                    <Display />
-                    <Entry />
+                    <Display
+                        value={this.state.output}
+                    />
+                    <Entry onCommandReceived={this.onCommandReceived} />
                 </div>
             </React.Fragment>
         );

@@ -2,32 +2,17 @@ import { InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { entryHeight } from "../../../settings/cssConstants";
 
-export class Display extends React.Component<{}, {}> {
+export class Display extends React.Component<
+    { value: string }
+> {
 
     public render() {
         return (
             <div css={this.mainStyle}>
                 <div css={this.contentStyle}>
-                    <div>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                        Hello, world!<br/>
-                    </div>
+                    <pre>
+                        {this.props.value}
+                    </pre>
                 </div>
             </div>
         );
