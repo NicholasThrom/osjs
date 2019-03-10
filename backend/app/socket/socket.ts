@@ -1,13 +1,15 @@
 import * as io from "socket.io";
+import { handleCommand } from "./handleCommand";
+import { outputToClient } from "./output";
 
 export const onClient = (client: io.Socket) => {
     client.on("message", (...args) => {
         switch (args[0]) {
             case "connect":
-                client.send("output", "Welcome to osjs");
+                outputToClient(client, "Welcome to osjs.");
                 break;
             case "command":
-                client.send("output", "wow");
+                handleCommand(client, args[1]);
                 break;
         }
     });
