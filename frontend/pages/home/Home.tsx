@@ -2,6 +2,7 @@ import { Global, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { globalCss } from "../../settings/commonCss";
 import { Display } from "./components/Display";
+import { Entry } from "./components/Entry";
 
 export class Home extends React.Component<{}, {}> {
 
@@ -20,6 +21,7 @@ export class Home extends React.Component<{}, {}> {
                 />
                 <div css={this.mainDivStyle}>
                     <Display />
+                    <Entry />
                 </div>
             </React.Fragment>
         );

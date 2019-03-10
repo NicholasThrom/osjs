@@ -6,4 +6,13 @@ export const globalCss: InterpolationWithTheme<any> = {
         margin: 0,
         fontFamily: "'Fira Mono', monospace",
     },
+
+    input: {
+        backgroundColor: "transparent",
+        borderStyle: "none",
+        outline: "none",
+        color: "inherit",
+        fontFamily: "inherit",
+        fontSize: "inherit",
+    },
 };
