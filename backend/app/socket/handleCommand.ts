@@ -15,7 +15,7 @@ type Handler = (command: string, otherData: { [key: string]: any }) => string | 
 export function handleCommand(client: Socket, command: string, otherData: { [key: string]: any }) {
     for (const commandHandler of commandHandlers) {
         const result = commandHandler(command, otherData);
-        if (result) {
+        if (result !== undefined) {
             outputToClient(client, `> ${command}`);
             handleResult(client, command, result);
             break;
