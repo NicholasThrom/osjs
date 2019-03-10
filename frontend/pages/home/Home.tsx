@@ -1,6 +1,7 @@
 import { Global, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { globalCss } from "../../settings/commonCss";
+import { socket } from "../../socket/socket";
 import { Display } from "./components/Display";
 import { Entry } from "./components/Entry";
 
@@ -17,10 +18,23 @@ export class Home extends React.Component<
         super(props);
     }
 
-    private onCommandReceived = (command: string) => {
+    public componentDidMount() {
+        socket.onMessage((...args) => {
+            switch (args[0]) {
+                case "output":
+                    this.addOutput(args[1]);
+            }
+        });
+    }
+
+    private addOutput(output: string, withNewLine = true) {
         this.setState((prev) => ({
-            output: prev.output + "\n" + command,
+            output: prev.output + (withNewLine ? "\n" : "") + output,
         }));
+    }
+
+    private onCommandReceived = (command: string) => {
+        socket.send("command", command);
     }
 
     public render() {
