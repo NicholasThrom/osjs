@@ -14,5 +14,9 @@ export function textual(command: string) {
         cat: "meow",
         ls: "/usr\n/root\n/www",
         wow: "wow!",
+        help: "jsos supports \"most\" unix commands.\n"
+            + "Additionally, \"say [message]\" sends a message to everyone.\n"
+            + "For more information about how to use a command, type \"man [command]\".\n",
+        "\"help\"": "Very funny. Without the quotes, please.",
     } as any)[c.name];
 }
