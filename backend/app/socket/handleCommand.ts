@@ -3,10 +3,11 @@ import { isArray } from "util";
 import { broadcast } from "../commands/broadcast";
 import { echo } from "../commands/echo";
 import { man } from "../commands/man";
+import { name } from "../commands/name";
 import { question } from "../commands/question";
 import { textual } from "../commands/textual";
 import { unknownCommand } from "../commands/unknownCommand";
-import { outputToClient, outputToEveryone } from "./output";
+import { outputToClient, outputToEveryone, stateToClient } from "./output";
 
 type Handler = (command: string, otherData: { [key: string]: any }) => string | { [key: string]: any } | undefined;
 
@@ -29,6 +30,8 @@ function handleResult(client: Socket, command: string, result: string | { [key: 
         if (result.type === "broadcast") {
             outputToClient(client, `> ${command}\n${result.content}`);
             outputToEveryone(client, `${result.content}`);
+        } else if (result.type === "state") {
+            stateToClient(client, result.content);
         }
     }
 }
@@ -37,7 +40,8 @@ const commandHandlers: Handler[] = [
     echo,
     broadcast,
     question,
-    textual,
     man,
+    name,
+    textual,
     unknownCommand,
 ];

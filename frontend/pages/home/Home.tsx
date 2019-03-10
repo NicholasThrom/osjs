@@ -8,7 +8,11 @@ const fishNames: { random(): string } = require("fish-names");
 
 export class Home extends React.Component<
     {},
-    { output: string }
+    {
+        output: string,
+        name: string,
+        pwd: string[],
+    }
 > {
 
     private display = React.createRef<Display>();
@@ -16,6 +20,7 @@ export class Home extends React.Component<
     public state = {
         output: "",
         name: fishNames.random(),
+        pwd: [],
     };
 
     public constructor(props: {}) {
@@ -29,6 +34,9 @@ export class Home extends React.Component<
             switch (args[0]) {
                 case "output":
                     this.addOutput(args[1]);
+                    break;
+                case "state":
+                    this.setState(args[1]);
                     break;
             }
         });
