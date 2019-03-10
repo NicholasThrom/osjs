@@ -1,7 +1,10 @@
 import * as io from "socket.io-client";
 
 export const socket = new class {
-    private readonly socketURL = process.env.BASE_URL || "http://localhost:3000";
+    private socketURL() {
+        const pageURL = (window !== undefined) && (window.location.protocol + window.location.host);
+        return process.env.BASE_URL || this.pageURL || "http://localhost:3000";
+    }
 
     private actionQueue: (() => void)[] = [];
     private isConnected = false;
@@ -9,7 +12,7 @@ export const socket = new class {
     private socketCache: SocketIOClient.Socket | undefined;
     private getSocket(): SocketIOClient.Socket {
         if (!this.socketCache) {
-            this.socketCache = io(this.socketURL);
+            this.socketCache = io(this.socketURL());
             this.socketCache.on("connect", () => {
                 this.actionQueue.forEach((h) => { h(); });
                 this.actionQueue = [];
