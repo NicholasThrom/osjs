@@ -1,1 +1,1 @@
-export const entryHeight = "3rem";
+export const entryHeight = "2.5rem";
