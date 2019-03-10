@@ -6,7 +6,7 @@ export function man(command: string) {
     if (c.name !== "man") { return; }
     return stripIndent(`
         NAME
-            ${c.name}
+            ${command}
 
         SYNOPSIS:
             ${command}
