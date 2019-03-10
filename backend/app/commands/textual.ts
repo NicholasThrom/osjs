@@ -13,5 +13,6 @@ export function textual(command: string) {
         node: "Error: ENOENT",
         cat: "meow",
         ls: "/usr\n/root\n/www",
+        wow: "wow!",
     } as any)[c.name];
 }

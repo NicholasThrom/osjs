@@ -37,7 +37,7 @@ export class Home extends React.Component<
     }
 
     private onCommandReceived = (command: string) => {
-        socket.send("command", command);
+        socket.send("command", command, this.state);
     }
 
     public render() {

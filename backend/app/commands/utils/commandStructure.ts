@@ -3,6 +3,6 @@ export function commandStructureOf(command: string) {
     return {
         name: splitCommand[0].toLowerCase(),
         args: splitCommand.slice(1),
-        content: command.slice(command.indexOf(" ") + 1),
+        content: (command.includes(" ") ? command.slice(command.indexOf(" ") + 1) : ""),
     };
 }

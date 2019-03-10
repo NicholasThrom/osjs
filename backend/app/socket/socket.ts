@@ -9,7 +9,7 @@ export const onClient = (client: io.Socket) => {
                 outputToClient(client, "Welcome to osjs.");
                 break;
             case "command":
-                handleCommand(client, args[1]);
+                handleCommand(client, args[1], args[2]);
                 break;
         }
     });
