@@ -1,6 +1,7 @@
 import { InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { entryHeight } from "../../../settings/cssConstants";
+import { keyCode } from "../../../util/keyCode";
 
 export class Entry extends React.Component {
 
@@ -8,10 +9,20 @@ export class Entry extends React.Component {
         currentInput: "",
     };
 
-    private readonly onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    private setInput(input: string) {
         this.setState({
-            currentInput: event.target.value,
+            currentInput: input,
         });
+    }
+
+    private readonly onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setInput(event.target.value);
+    }
+
+    private readonly onKeyDown = (event: React.KeyboardEvent) => {
+        if (event.which === keyCode.enter) {
+            this.setInput("");
+        }
     }
 
     public render() {
@@ -21,13 +32,18 @@ export class Entry extends React.Component {
                     <div css={this.promptStyle}>
                         {">"}
                     </div>
-                    <input css={this.inputStyle} onChange={this.onChange} value={this.state.currentInput} />
+                    <input
+                        css={this.inputStyle}
+                        onChange={this.onChange}
+                        value={this.state.currentInput}
+                        onKeyDown={this.onKeyDown}
+                    />
                 </div>
             </div>
         );
     }
 
-    private readonly mainStyle: InterpolationWithTheme<any> = {
+    private readonly mainStyle: InterpolationWithTheme<any > = {
         height: entryHeight,
         padding: "0px 1rem",
     };
