@@ -45,7 +45,7 @@ export const pageLoader = new class PageLoader {
     }
 
     private _fontLink() {
-        return "https://fonts.googleapis.com/css?family=Aleo:300,400,700";
+        return "https://fonts.googleapis.com/css?family=Fira+Mono";
     }
 
     private _fontContents() {
