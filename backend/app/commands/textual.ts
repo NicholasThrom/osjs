@@ -76,6 +76,7 @@ export function textual(command: string) {
         clang: "clang is not supported. Use node instead.",
         gdb: "gdb is not supported. Use node instead.",
         stop: "sorry",
+        clear: "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n",
         restart: "You don't need to start jsos manually! Instead, just wait for it to crash.",
         help: "jsos supports \"most\" unix commands.\n"
             + "Additionally, \"say [message]\" sends a message to everyone.\n"
