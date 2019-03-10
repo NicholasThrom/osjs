@@ -3,6 +3,7 @@ import { isArray } from "util";
 import { broadcast } from "../commands/broadcast";
 import { echo } from "../commands/echo";
 import { fileSystem } from "../commands/fileSystem";
+import { location } from "../commands/location";
 import { man } from "../commands/man";
 import { name } from "../commands/name";
 import { question } from "../commands/question";
@@ -39,12 +40,13 @@ function handleResult(client: Socket, command: string, result: string | { [key: 
 }
 
 const commandHandlers: Handler[] = [
+    fileSystem,
     echo,
     broadcast,
     question,
     man,
     name,
-    fileSystem,
+    location,
     textual,
     unknownCommand,
 ];

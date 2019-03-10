@@ -2,13 +2,20 @@ import { string } from "prop-types";
 import { isArray } from "util";
 import { commandStructureOf } from "./utils/commandStructure";
 
-type File = Directory;
+type File = Directory | SingleFile;
 
 interface Directory {
     type: "directory";
     name: string;
     protected?: boolean;
     children: File[];
+}
+
+interface SingleFile {
+    type: "file";
+    contents: string;
+    name: string;
+    protected?: boolean;
 }
 
 const root: Directory = {
@@ -19,24 +26,20 @@ const root: Directory = {
 };
 
 function fileAt(file: File, path: any[]): File | undefined {
+    console.log("here", file, path);
     if (path.length === 0) {
+        console.log("here2", file, path);
         return file;
     }
-    if (file.type !== "directory") { return; }
+    if (file.type !== "directory") {
+        console.log("here3", file, path);
+        return;
+    }
+    console.log("here4", file, path);
     const child = file.children.find((file) => file.name === path[0]);
+    console.log("here5", file, path, child);
     if (!child) { return; }
     return fileAt(child, path.slice(1));
-}
-
-function makeDirectory(file: File, path: any[], name: string): boolean {
-    const directory = fileAt(file, path);
-    if (!directory || directory.type !== "directory") { return false; }
-    directory.children.push({
-        type: "directory",
-        name,
-        children: [],
-    });
-    return true;
 }
 
 function correctPath(path: any[]): any[] {
@@ -87,7 +90,6 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
             };
         }
         case "ls": {
-            console.log(root);
             const directory = fileAt(root, addPath(pwd, path));
             if (!directory) {
                 return `${path || "."} is not a directory`;
@@ -105,15 +107,66 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
                 .join("\n");
         }
         case "mkdir": {
-            const directory = fileAt(root, pwd);
-            console.log("name", name);
-            if (!directory || directory.type !== "directory") {
-                return "The directory you are in no longer exists";
+            const fileToCreate = addPath(pwd, path);
+            const containingPath = fileToCreate.slice(0, -1);
+            const containingDirectory = fileAt(root, containingPath);
+            if (!containingDirectory) {
+                return `${path || "."} does not exist`;
             }
-            directory.children.push({
+            if (containingDirectory.type !== "directory") {
+                return `${path || "."} is invalid`;
+            }
+            containingDirectory.children.push({
                 type: "directory",
-                name: `${name}`,
+                name: `${fileToCreate[fileToCreate.length - 1]}`,
                 children: [],
+            });
+            return [];
+        }
+        case "touch": {
+            const fileToCreate = addPath(pwd, path);
+            const containingPath = fileToCreate.slice(0, -1);
+            const containingDirectory = fileAt(root, containingPath);
+            if (!containingDirectory) {
+                return `${path || "."} does not exist`;
+            }
+            if (containingDirectory.type !== "directory") {
+                return `${path || "."} is invalid`;
+            }
+            containingDirectory.children.push({
+                type: "file",
+                name: `${fileToCreate[fileToCreate.length - 1]}`,
+                contents: "",
+            });
+            return [];
+        }
+        case "cat": {
+            const file = fileAt(root, addPath(pwd, path));
+            console.log(file);
+            if (!file) {
+                return `${path || "."} is not a file`;
+            }
+            if (file.type !== "file") {
+                return `${path || "."} is a directory`;
+            }
+            return file.contents;
+        }
+        case "echo": {
+            const things = c.content.split(">");
+            if (things.length !== 2) { return; }
+            const fileToCreate = addPath(pwd, things[1].trim());
+            const containingPath = fileToCreate.slice(0, -1);
+            const containingDirectory = fileAt(root, containingPath);
+            if (!containingDirectory) {
+                return `${path || "."} does not exist`;
+            }
+            if (containingDirectory.type !== "directory") {
+                return `${path || "."} is invalid`;
+            }
+            containingDirectory.children.push({
+                type: "file",
+                name: `${fileToCreate[fileToCreate.length - 1]}`,
+                contents: things[0].trim(),
             });
             return [];
         }
@@ -125,7 +178,7 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
                 return `${path || "."} does not exist`;
             }
             if (containingDirectory.type !== "directory") {
-                return `${path || "."} is not a directory`;
+                return `${path || "."} is invalid`;
             }
             containingDirectory.children = containingDirectory.children
                 .filter(
