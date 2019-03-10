@@ -2,10 +2,16 @@ import { InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { entryHeight } from "../../../settings/cssConstants";
 
-export class Entry extends React.Component<{}, {}> {
+export class Entry extends React.Component {
 
-    private readonly onChange = (value: React.ChangeEvent) => {
-        console.log(value);
+    public state = {
+        currentInput: "",
+    };
+
+    private readonly onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        this.setState({
+            currentInput: event.target.value,
+        });
     }
 
     public render() {
@@ -15,7 +21,7 @@ export class Entry extends React.Component<{}, {}> {
                     <div css={this.promptStyle}>
                         {">"}
                     </div>
-                    <input css={this.inputStyle} onChange={this.onChange} />
+                    <input css={this.inputStyle} onChange={this.onChange} value={this.state.currentInput} />
                 </div>
             </div>
         );
