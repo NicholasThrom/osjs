@@ -4,8 +4,9 @@ import { app } from "./app";
 
 export const starter = new class Starter {
     public start() {
+        const port = process.env.PORT || 3000;
         console.log("Starting server");
-        console.log("Listening on port 3000");
-        http.createServer(app.getApp()).listen(3000);
+        console.log(`Listening on port ${port}`);
+        http.createServer(app.getApp()).listen(port);
     }
 }();
