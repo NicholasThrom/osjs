@@ -6,6 +6,14 @@ export class Display extends React.Component<
     { value: string }
 > {
 
+    public endElement = React.createRef<HTMLDivElement>();
+
+    public scrollToEnd() {
+        if (this.endElement.current) {
+            (this.endElement.current as any).scrollIntoView();
+        }
+    }
+
     public render() {
         return (
             <div css={this.mainStyle}>
@@ -13,6 +21,7 @@ export class Display extends React.Component<
                     <pre>
                         {this.props.value}
                     </pre>
+                    <div ref={this.endElement} />
                 </div>
             </div>
         );

@@ -10,6 +10,8 @@ export class Home extends React.Component<
     { output: string }
 > {
 
+    private display = React.createRef<Display>();
+
     public state = {
         output: "",
     };
@@ -34,6 +36,9 @@ export class Home extends React.Component<
         this.setState((prev) => ({
             output: prev.output + (withNewLine ? "\n" : "") + output,
         }));
+        if (this.display.current) {
+            this.display.current.scrollToEnd();
+        }
     }
 
     private onCommandReceived = (command: string) => {
@@ -52,6 +57,7 @@ export class Home extends React.Component<
                 <div css={this.mainDivStyle}>
                     <Display
                         value={this.state.output}
+                        ref={this.display}
                     />
                     <Entry onCommandReceived={this.onCommandReceived} />
                 </div>

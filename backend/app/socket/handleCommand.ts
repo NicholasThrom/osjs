@@ -1,6 +1,7 @@
 import { Socket } from "socket.io";
 import { broadcast } from "../commands/broadcast";
 import { echo } from "../commands/echo";
+import { man } from "../commands/man";
 import { question } from "../commands/question";
 import { textual } from "../commands/textual";
 import { unknownCommand } from "../commands/unknownCommand";
@@ -26,5 +27,6 @@ const commandHandlers: ((command: string, otherData: {}) => string | { [key: str
     broadcast,
     question,
     textual,
+    man,
     unknownCommand,
 ];
