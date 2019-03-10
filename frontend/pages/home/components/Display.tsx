@@ -42,6 +42,7 @@ export class Display extends React.Component<{}, {}> {
 
     private readonly contentStyle: InterpolationWithTheme<any> = {
         overflow: "auto",
+        padding: "1rem",
     };
 
 }
