@@ -2,7 +2,7 @@ import * as io from "socket.io-client";
 
 export const socket = new class {
     private socketURL() {
-        const pageURL = (window !== undefined) && (window.location.protocol + window.location.host);
+        const pageURL = window !== undefined && window.location.origin;
         return process.env.BASE_URL || pageURL || "http://localhost:3000";
     }
 
