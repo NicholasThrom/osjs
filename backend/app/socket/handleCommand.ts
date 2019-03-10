@@ -2,6 +2,7 @@ import { Socket } from "socket.io";
 import { isArray } from "util";
 import { broadcast } from "../commands/broadcast";
 import { echo } from "../commands/echo";
+import { fileSystem } from "../commands/fileSystem";
 import { man } from "../commands/man";
 import { name } from "../commands/name";
 import { question } from "../commands/question";
@@ -15,6 +16,7 @@ export function handleCommand(client: Socket, command: string, otherData: { [key
     for (const commandHandler of commandHandlers) {
         const result = commandHandler(command, otherData);
         if (result) {
+            outputToClient(client, `> ${command}`);
             handleResult(client, command, result);
             break;
         }
@@ -23,12 +25,12 @@ export function handleCommand(client: Socket, command: string, otherData: { [key
 
 function handleResult(client: Socket, command: string, result: string | { [key: string]: any }) {
     if (typeof result === "string") {
-        outputToClient(client, `> ${command}\n` + result);
+        outputToClient(client, result);
     } else if (isArray(result)) {
         result.forEach((r) => { handleResult(client, command, r); });
     } else if (typeof result === "object") {
         if (result.type === "broadcast") {
-            outputToClient(client, `> ${command}\n${result.content}`);
+            outputToClient(client, `${result.content}`);
             outputToEveryone(client, `${result.content}`);
         } else if (result.type === "state") {
             stateToClient(client, result.content);
@@ -42,6 +44,7 @@ const commandHandlers: Handler[] = [
     question,
     man,
     name,
+    fileSystem,
     textual,
     unknownCommand,
 ];
