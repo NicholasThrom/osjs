@@ -1,4 +1,4 @@
-import { Global, InterpolationWithTheme } from "@emotion/core";
+import { Global } from "@emotion/core";
 import * as React from "react";
 import { globalCss } from "../../settings/commonCss";
 
