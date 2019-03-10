@@ -1,7 +1,7 @@
 {
-  "name": "ts-home",
+  "name": "osjs",
   "version": "0.0.0",
-  "description": "A website for me",
+  "description": "A (satirical) operating system made in js",
   "main": "index.js",
   "scripts": {
     "build": "webpack",
@@ -20,14 +20,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NicholasThrom/ts-home.git"
+    "url": "git+https://github.com/NicholasThrom/osjs.git"
   },
   "author": "Nicholas Throm",
   "license": "UNLICENSED",
   "bugs": {
-    "url": "https://github.com/NicholasThrom/ts-home/issues"
+    "url": "git+https://github.com/NicholasThrom/osjs.git"
   },
-  "homepage": "https://github.com/NicholasThrom/ts-home#readme",
+  "homepage": "http://127.0.0.1.blockchain.https.osjs.website",
   "dependencies": {
     "@emotion/core": "^10.0.6",
     "@types/color": "^3.0.0",
