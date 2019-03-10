@@ -39,7 +39,7 @@ function makeDirectory(file: File, path: any[], name: string): boolean {
     return true;
 }
 
-function correctPath(path: any[]) {
+function correctPath(path: any[]): any[] {
     return path.reduce(
         (a, b) => {
             if (b === "") { return a; }
@@ -51,7 +51,7 @@ function correctPath(path: any[]) {
     );
 }
 
-function addPath(pwd: any[], path: string) {
+function addPath(pwd: any[], path: string): any[] {
     let newPWD;
     if (path.startsWith("/")) {
         newPWD = path.split("/");
@@ -74,6 +74,11 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
             return `/${pwd.join("/") || ""}`;
         }
         case "cd": {
+            const newPath = addPath(pwd, path);
+            const fileThere = fileAt(root, newPath);
+            if (!fileThere || fileThere.type !== "directory") {
+                return `${path || "."} is not a directory`;
+            }
             return {
                 type: "state",
                 content: {
@@ -83,14 +88,14 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
         }
         case "ls": {
             console.log(root);
-            const file = fileAt(root, addPath(pwd, path));
-            if (!file) {
-                return `No file at ${path}`;
+            const directory = fileAt(root, addPath(pwd, path));
+            if (!directory) {
+                return `${path || "."} is not a directory`;
             }
-            if (file.type !== "directory") {
-                return `${path} is not a directory`;
+            if (directory.type !== "directory") {
+                return `${path || "."} is not a directory`;
             }
-            return file.children
+            return directory.children
                 .map((child) => {
                     if (child.type === "directory") {
                         return `${child.name}/`;
@@ -111,6 +116,22 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
                 children: [],
             });
             return [];
+        }
+        case "rm": {
+            const fileToDelete = addPath(pwd, path);
+            const containingPath = fileToDelete.slice(0, -1);
+            const containingDirectory = fileAt(root, containingPath);
+            if (!containingDirectory) {
+                return `${path || "."} does not exist`;
+            }
+            if (containingDirectory.type !== "directory") {
+                return `${path || "."} is not a directory`;
+            }
+            containingDirectory.children = containingDirectory.children
+                .filter(
+                    (child) => child.name !== fileToDelete[fileToDelete.length - 1] || child.protected,
+                );
+            return "";
         }
     }
 }
