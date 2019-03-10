@@ -1,0 +1,32 @@
+{
+    "presets": [
+        "@babel/preset-env",
+        "@babel/preset-typescript",
+        [
+            "@babel/preset-react",
+            {
+                "pragma": "require(\"@emotion/core\").jsx",
+            },
+        ]
+    ],
+
+    "env": {
+        "production": {
+            "plugins": [
+                "emotion",
+                "@babel/plugin-proposal-class-properties",
+            ],
+        },
+        "development": {
+            "plugins": [
+                [
+                    "emotion",
+                    {
+                        "sourceMap": true,
+                    },
+                ],
+                "@babel/plugin-proposal-class-properties",
+            ],
+        },
+    },
+}
