@@ -1,10 +1,14 @@
 import * as io from "socket.io";
 
 export const onClient = (client: io.Socket) => {
-    client.on("event", (...args) => {
-        // nothing
-    });
     client.on("message", (...args) => {
-        client.send("output", "wow");
+        switch (args[0]) {
+            case "connect":
+                client.send("output", "Welcome to osjs");
+                break;
+            case "command":
+                client.send("output", "wow");
+                break;
+        }
     });
 };

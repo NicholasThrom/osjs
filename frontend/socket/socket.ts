@@ -14,9 +14,6 @@ export const socket = new class {
                 this.actionQueue.forEach((h) => { h(); });
                 this.actionQueue = [];
             });
-            // this.socketCache.on("disconnect", () => {
-            //
-            // });
             this.socketCache.on("message", (...args: any) => {
                 this.onMessageHandlers.forEach((handler) => {
                     handler(...args);

@@ -19,10 +19,13 @@ export class Home extends React.Component<
     }
 
     public componentDidMount() {
+        socket.send("connect");
+
         socket.onMessage((...args) => {
             switch (args[0]) {
                 case "output":
                     this.addOutput(args[1]);
+                    break;
             }
         });
     }
