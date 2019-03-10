@@ -12,10 +12,26 @@ export class Home extends React.Component<{}, {}> {
         return (
             <React.Fragment>
                 <Global
-                    styles={globalCss}
+                    styles={{
+                        ...globalCss as object,
+                        ...this.backgroundStyle,
+                    }}
                 />
-                <h1>Hello, world!</h1>
+                <div style={this.mainDivStyle}>
+                    Hello, world!
+                </div>
             </React.Fragment>
         );
     }
+
+    private readonly backgroundStyle = {
+        body: {
+            backgroundColor: "#262422",
+            color: "#CC6A14",
+        },
+    };
+
+    private readonly mainDivStyle = {
+        height: "100vh",
+    };
 }
