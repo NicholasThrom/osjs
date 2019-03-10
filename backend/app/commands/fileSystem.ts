@@ -141,6 +141,7 @@ export function fileSystem(command: string, state: { [key: string]: any }) {
             return [];
         }
         case "cat": {
+            if (path === "") { return; }
             const file = fileAt(root, addPath(pwd, path));
             console.log(file);
             if (!file) {
