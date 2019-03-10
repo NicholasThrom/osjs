@@ -4,6 +4,7 @@ import { globalCss } from "../../settings/commonCss";
 import { socket } from "../../socket/socket";
 import { Display } from "./components/Display";
 import { Entry } from "./components/Entry";
+const fishNames: { random(): string } = require("fish-names");
 
 export class Home extends React.Component<
     {},
@@ -14,6 +15,7 @@ export class Home extends React.Component<
 
     public state = {
         output: "",
+        name: fishNames.random(),
     };
 
     public constructor(props: {}) {

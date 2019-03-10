@@ -8,7 +8,9 @@ import { textual } from "../commands/textual";
 import { unknownCommand } from "../commands/unknownCommand";
 import { outputToClient, outputToEveryone } from "./output";
 
-export function handleCommand(client: Socket, command: string, otherData: {}) {
+type Handler = (command: string, otherData: { [key: string]: any }) => string | { [key: string]: any } | undefined;
+
+export function handleCommand(client: Socket, command: string, otherData: { [key: string]: any }) {
     for (const commandHandler of commandHandlers) {
         const result = commandHandler(command, otherData);
         if (result) {
@@ -31,7 +33,7 @@ function handleResult(client: Socket, command: string, result: string | { [key: 
     }
 }
 
-const commandHandlers: ((command: string, otherData: {}) => string | { [key: string]: any } | undefined)[] = [
+const commandHandlers: Handler[] = [
     echo,
     broadcast,
     question,
