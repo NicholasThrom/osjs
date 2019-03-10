@@ -1,3 +1,4 @@
+const isNode = require("is-node") as boolean;
 import * as io from "socket.io-client";
 
 export const socket = new class {
@@ -28,10 +29,12 @@ export const socket = new class {
 
     private onMessageHandlers: ((...args: any[]) => void)[] = [];
     public onMessage(handler: (...args: any[]) => void) {
+        if (isNode) { return; }
         this.onMessageHandlers.push(handler);
     }
 
     public send(...args: any[]) {
+        if (isNode) { return; }
         const handler = () => {
             this.getSocket().send(...args);
         };
