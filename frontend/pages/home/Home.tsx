@@ -1,6 +1,7 @@
-import { Global } from "@emotion/core";
+import { Global, InterpolationWithTheme } from "@emotion/core";
 import * as React from "react";
 import { globalCss } from "../../settings/commonCss";
+import { Display } from "./components/Display";
 
 export class Home extends React.Component<{}, {}> {
 
@@ -14,24 +15,24 @@ export class Home extends React.Component<{}, {}> {
                 <Global
                     styles={{
                         ...globalCss as object,
-                        ...this.backgroundStyle,
+                        ...this.backgroundStyle as object,
                     }}
                 />
-                <div style={this.mainDivStyle}>
-                    Hello, world!
+                <div css={this.mainDivStyle}>
+                    <Display />
                 </div>
             </React.Fragment>
         );
     }
 
-    private readonly backgroundStyle = {
+    private readonly backgroundStyle: InterpolationWithTheme<any> = {
         body: {
             backgroundColor: "#262422",
             color: "#CC6A14",
         },
     };
 
-    private readonly mainDivStyle = {
+    private readonly mainDivStyle: InterpolationWithTheme<any> = {
         height: "100vh",
     };
 }
