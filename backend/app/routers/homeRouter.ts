@@ -7,7 +7,7 @@ export const homeRouter = new class HomeRouter {
     public getRouter() {
         const router = express.Router();
         router.get("/", async function (req, res) {
-            res.send(await pageLoader.loadPage(Home, {}, "Home", "Home"));
+            res.send(await pageLoader.loadPage(Home, {}, "Home", "osjs"));
         });
         return router;
     }
