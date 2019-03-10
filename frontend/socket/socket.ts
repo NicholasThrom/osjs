@@ -7,7 +7,6 @@ export const socket = new class {
     }
 
     private actionQueue: (() => void)[] = [];
-    private isConnected = false;
 
     private socketCache: SocketIOClient.Socket | undefined;
     private getSocket(): SocketIOClient.Socket {
