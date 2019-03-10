@@ -41,6 +41,7 @@ export class Entry extends React.Component<
                         onChange={this.onChange}
                         value={this.state.currentInput}
                         onKeyDown={this.onKeyDown}
+                        autoFocus={true}
                     />
                 </div>
             </div>
